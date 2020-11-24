@@ -8,13 +8,13 @@ This page was made for a college project; It's **not** mobile-friendly neither r
 $ git clone https://github.com/caiodomingues/medtech.git
 $ cd medtech
 
-$ cd frontend
+$ cd web
 $ yarn
 $ yarn start
 
-$ cd backend
+$ cd server
 $ yarn
-$ yarn dev
+$ yarn dev:server
 ```
 
 **Note:** For the correct usage of the project, it's necessary to take a look at database connection configuration file: `ormconfig.json`.
