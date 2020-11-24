@@ -9,12 +9,10 @@ const examsRouter = Router();
 
 examsRouter.post("/", async (req, res) => {
   try {
-    const { employee_id, examType_id, date, shelf_life } = req.body;
+    const { name, shelf_life } = req.body;
     const examsController = new ExamsController();
     const exame = await examsController.store({
-      employee_id,
-      examType_id,
-      date,
+      name,
       shelf_life,
     });
     return res.status(200).json(exame);
@@ -39,15 +37,13 @@ examsRouter.get("/:id", ensureAuthenticated, async (req, res) => {
 });
 
 examsRouter.put("/:id", ensureAuthenticated, async (req, res) => {
-  const { employee_id, examType_id, date, shelf_life } = req.body;
+  const { name, shelf_life } = req.body;
   const examRepo = getRepository("Exams");
   const { id } = req.params;
   const ex = await examRepo.findOne(id);
 
   const exam = examRepo.create({
-    employee_id,
-    examType_id,
-    date,
+    name,
     shelf_life,
   });
   const respo = await examRepo.save({ ...ex, ...exam });

@@ -18,7 +18,7 @@ class UsersController {
     });
 
     if (verificaUsuarioExiste) {
-      throw new Error("Matricula já registrada");
+      throw new Error("Essa matricula ja foi registrada!");
     }
     const hashedPassword = await hash(password, 8);
 

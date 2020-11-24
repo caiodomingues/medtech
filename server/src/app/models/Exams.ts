@@ -18,26 +18,27 @@ class Exams {
   id: string;
 
   @Column()
-  employee_id: string;
+  name: string;
 
-  @ManyToOne(() => Employees)
-  @JoinColumn({ name: "employee_id" })
-  employee: Employees;
+  // @Column()
+  // employee_id: string;
 
+  // @ManyToOne(() => Employees)
+  // @JoinColumn({ name: "employee_id" })
+  // employee: Employees;
+
+  // @Column()
+  // examType_id: string;
+
+  // @ManyToOne(() => ExamType)
+  // @JoinColumn({ name: "examType_id" })
+  // examType: ExamType;
+
+  // @Column("time with time zone")
+  // date: Date;
 
   @Column()
-  examType_id: string;
-  
-  @ManyToOne(() => ExamType)
-  @JoinColumn({ name: "examType_id" })
-  examType: ExamType;
-
-
-  @Column("time with time zone")
-  date: Date;
-
-  @Column()
-  shelf_life: number;
+  shelf_life: string;
 
   @CreateDateColumn()
   created_at: Date;

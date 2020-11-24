@@ -5,24 +5,15 @@ import Exams from "../models/Exams";
 import ExamType from "../models/ExamType";
 
 interface Request {
-  employee_id: string;
-  examType_id: string;
-  date: Date;
-  shelf_life: number;
+  name: string;
+  shelf_life: string;
 }
 
 class ExamsController {
-  public async store({
-    employee_id,
-    examType_id,
-    date,
-    shelf_life,
-  }: Request): Promise<Exams> {
+  public async store({ name, shelf_life }: Request): Promise<Exams> {
     const examRepo = getRepository("Exams");
     const exams = examRepo.create({
-      employee_id,
-      examType_id,
-      date,
+      name,
       shelf_life,
     });
 

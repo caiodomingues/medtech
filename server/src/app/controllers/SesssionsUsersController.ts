@@ -20,12 +20,12 @@ class SessionsUsersController {
       where: { enrollment },
     });
     if (!user) {
-      throw new Error("Matrícula/senha incorretos");
+      throw new Error("Matrícula ou senha incorretos");
     }
     const verify = await compare(password, user.password);
 
     if (!verify) {
-      throw new Error("Matrícula/senha incorretos");
+      throw new Error("Matrícula ou senha incorretos");
     }
 
     const token = sign({}, authConfig.jwt.secret, {

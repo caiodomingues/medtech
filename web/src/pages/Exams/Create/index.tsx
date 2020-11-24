@@ -19,7 +19,6 @@ const Create: React.FC = () => {
 
   const [name, setName] = useState<string>("");
   const [shelfLife, setShelfLife] = useState<string>("");
-  const [exams, setExams] = useState<Exam[]>([]);
 
   useEffect(() => {
     const data = async () => {
@@ -34,15 +33,6 @@ const Create: React.FC = () => {
             console.log(err);
           });
       }
-
-      await api
-        .get("exams")
-        .then((res) => {
-          setExams(res.data);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
     };
 
     data();

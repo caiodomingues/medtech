@@ -22,16 +22,7 @@ const Exams: React.FC = () => {
       await api
         .get("exams")
         .then((res) => {
-          // setExams(res.data);
-          setExams([
-            {
-              id: "1",
-              name: "Exame de teste",
-              shelf_life: "50",
-              created_at: "24/11/20",
-              updated_at: "24/11/20",
-            },
-          ]);
+          setExams(res.data);
         })
         .catch((err) => {
           console.log(err);

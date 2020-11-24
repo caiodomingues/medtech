@@ -12,7 +12,7 @@ interface Request {
 
 class ProfilePictureController {
   public async update({ user_id, photo }: Request): Promise<Users> {
-    const usersRepository = getRepository(Users);
+    const usersRepository = getRepository("Users");
 
     const user = await usersRepository.findOne(user_id);
     if (!user) {

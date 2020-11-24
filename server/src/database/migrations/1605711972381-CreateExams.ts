@@ -19,19 +19,23 @@ export class CreateExams1605711972381 implements MigrationInterface {
             default: "uuid_generate_v4()",
           },
           {
-            name: "employee_id",
-            type: "uuid",
-            isNullable: true,
+            name: "name",
+            type: "varchar",
           },
-          {
-            name: "examType_id",
-            type: "uuid",
-            isNullable: true,
-          },
-          {
-            name: "date",
-            type: "timestamp with time zone",
-          },
+          // {
+          //   name: "employee_id",
+          //   type: "uuid",
+          //   isNullable: true,
+          // },
+          // {
+          //   name: "examType_id",
+          //   type: "uuid",
+          //   isNullable: true,
+          // },
+          // {
+          //   name: "date",
+          //   type: "timestamp with time zone",
+          // },
           {
             name: "shelf_life",
             type: "integer",
@@ -50,27 +54,27 @@ export class CreateExams1605711972381 implements MigrationInterface {
       })
     );
 
-    await queryRunner.createForeignKey(
-      "Exams",
-      new TableForeignKey({
-        columnNames: ["employee_id"],
-        referencedColumnNames: ["id"],
-        referencedTableName: "Employees",
-        onDelete: "SET NULL",
-        onUpdate: "CASCADE",
-      })
-    );
+    // await queryRunner.createForeignKey(
+    //   "Exams",
+    //   new TableForeignKey({
+    //     columnNames: ["employee_id"],
+    //     referencedColumnNames: ["id"],
+    //     referencedTableName: "Employees",
+    //     onDelete: "SET NULL",
+    //     onUpdate: "CASCADE",
+    //   })
+    // );
 
-    await queryRunner.createForeignKey(
-      "Exams",
-      new TableForeignKey({
-        columnNames: ["examType_id"],
-        referencedColumnNames: ["id"],
-        referencedTableName: "ExamType",
-        onDelete: "SET NULL",
-        onUpdate: "CASCADE",
-      })
-    );
+    // await queryRunner.createForeignKey(
+    //   "Exams",
+    //   new TableForeignKey({
+    //     columnNames: ["examType_id"],
+    //     referencedColumnNames: ["id"],
+    //     referencedTableName: "ExamType",
+    //     onDelete: "SET NULL",
+    //     onUpdate: "CASCADE",
+    //   })
+    // );
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
