@@ -27,12 +27,16 @@ function Routes() {
         <Route path="/register" component={Register} />
         <Route path="/employees" component={Employees} />
         <Route path="/create-employee" component={EmployeesCreate} />
+        <Route path="/edit-employee/:id" component={EmployeesCreate} />
         <Route path="/exams" component={Exams} />
         <Route path="/execution" component={ExamsExecution} />
         <Route path="/create-exam" component={ExamsCreate} />
+        <Route path="/edit-exam/:id" component={ExamsCreate} />
         <Route path="/create-type" component={ExamsTypeCreate} />
+        <Route path="/edit-type/:id" component={ExamsTypeCreate} />
         <Route path="/reports" component={Reports} />
         <Route path="/create-report" component={ReportsCreate} />
+        <Route path="/edit-report/:id" component={ReportsCreate} />
         <Route component={NotFound} />
       </Switch>
     </BrowserRouter>

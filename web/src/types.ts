@@ -14,18 +14,19 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {}
 export interface UserProps {
   name: string;
   email: string;
-}
-
-export interface RegisterCredentials {
-  name: string;
-  email: string;
-  password: string;
-  c_password: string;
+  enrollment: string | number;
+  cpf: string | number;
+  photo: string;
 }
 
 export interface LoginCredentials {
   email: string;
   password: string;
+}
+
+export interface RegisterCredentials extends LoginCredentials {
+  name: string;
+  c_password: string;
 }
 
 export interface AuthContextProps {
@@ -36,4 +37,8 @@ export interface AuthContextProps {
   signIn: (credentials: LoginCredentials) => Promise<void>;
   signOut: () => {};
   register: (credentials: RegisterCredentials) => Promise<void>;
+}
+
+export interface RouteParams {
+  id: string | number | null;
 }

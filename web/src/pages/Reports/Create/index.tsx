@@ -1,7 +1,8 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import { HiArrowLeft, HiOutlineCheck } from "react-icons/hi";
+import React, { useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
+import api from "../../../services/api";
 
+import { HiArrowLeft, HiOutlineCheck } from "react-icons/hi";
 import { CardContainer, CardBottom } from "./styles";
 
 import Button from "../../../components/Button";
@@ -12,6 +13,23 @@ import Card from "../../../components/Card";
 import Input from "../../../components/Input";
 
 const Create: React.FC = () => {
+  const { id }: { id: string } = useParams();
+
+  const [name, setName] = useState<string>("");
+
+  useEffect(() => {
+    const data = async () => {
+      return await api
+        .get("")
+        .then((res) => {
+          console.log(res.data);
+        })
+        .catch((err) => console.log(err));
+    };
+
+    if (id) data();
+  }, [id]);
+
   return (
     <Container>
       <SideBar visible={true} />
@@ -21,7 +39,7 @@ const Create: React.FC = () => {
             <HiArrowLeft size={12} style={{ marginRight: 8 }} />
             Voltar
           </Link>
-          <h1>Criando um relatório</h1>
+          <h1>{id ? "Editando" : "Criando"} um relatório</h1>
           <Card style={{ padding: 32 }}>
             <label htmlFor="name">Nome</label>
             <Input
@@ -29,6 +47,8 @@ const Create: React.FC = () => {
               id="name"
               name="name"
               placeholder="Nome do relatório"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
             />
             <CardBottom>
               <Button type="submit">

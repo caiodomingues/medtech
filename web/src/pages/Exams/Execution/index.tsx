@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
+import api from "../../../services/api";
+
 import { HiArrowLeft, HiOutlineCheck } from "react-icons/hi";
-import { Link } from "react-router-dom";
+import { CardContainer, CardBottom } from "./styles";
 
 import Button from "../../../components/Button";
 import Card from "../../../components/Card";
@@ -9,9 +12,27 @@ import Input from "../../../components/Input";
 import SideBar from "../../../components/SideBar";
 import Container from "../../../components/Container";
 
-import { CardContainer, CardBottom } from "./styles";
-
 const Execution: React.FC = () => {
+  const { id }: { id: string } = useParams();
+
+  const [employee, setEmployee] = useState<string>();
+  const [exam, setExam] = useState<string>();
+  const [type, setType] = useState<string>();
+  const [date, setDate] = useState<string>();
+
+  useEffect(() => {
+    const data = async () => {
+      return await api
+        .get("")
+        .then((res) => {
+          console.log(res.data);
+        })
+        .catch((err) => console.log(err));
+    };
+
+    if (id) data();
+  }, [id]);
+
   return (
     <Container>
       <SideBar visible={true} />
@@ -21,7 +42,7 @@ const Execution: React.FC = () => {
             <HiArrowLeft size={12} style={{ marginRight: 8 }} />
             Voltar
           </Link>
-          <h1>Executando um exame</h1>
+          <h1>{id ? "Editando a execução de " : "Executando"} um exame</h1>
           <Card style={{ padding: 32 }}>
             <label htmlFor="name">Funcionário</label>
             <Input
@@ -29,6 +50,8 @@ const Execution: React.FC = () => {
               id="name"
               name="name"
               placeholder="Nome do funcionário"
+              value={employee}
+              onChange={(e) => setEmployee(e.target.value)}
             />
             <br />
             <label htmlFor="exam">Exame</label>
@@ -37,6 +60,8 @@ const Execution: React.FC = () => {
               id="exam"
               name="exam"
               placeholder="Nome do exame"
+              value={exam}
+              onChange={(e) => setExam(e.target.value)}
             />
             <br />
             <label htmlFor="exam_type">Tipo de Exame</label>
@@ -45,6 +70,8 @@ const Execution: React.FC = () => {
               id="exam_type"
               name="exam_type"
               placeholder="Nome do tipo de exame"
+              value={type}
+              onChange={(e) => setType(e.target.value)}
             />
             <br />
             <label htmlFor="exam_date">Data do Exame</label>
@@ -53,6 +80,8 @@ const Execution: React.FC = () => {
               id="exam_date"
               name="exam_date"
               placeholder="Nome do tipo de exame"
+              value={date}
+              onChange={(e) => setDate(e.target.value)}
             />
             <br />
             <CardBottom>
