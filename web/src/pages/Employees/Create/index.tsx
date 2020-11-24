@@ -97,7 +97,7 @@ const Create: React.FC = () => {
             <CardBottom>
               <Button type="submit">
                 <HiOutlineCheck size={56} />
-                Criar
+                {id ? "Editar" : "Criar"}
               </Button>
             </CardBottom>
           </Card>

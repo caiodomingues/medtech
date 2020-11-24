@@ -1,8 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useHistory, useParams } from "react-router-dom";
 import api from "../../../services/api";
 
-import { HiArrowLeft, HiOutlineCheck } from "react-icons/hi";
+import {
+  HiArrowLeft,
+  HiOutlineCheck,
+  HiOutlinePencil,
+  HiOutlineTrash,
+} from "react-icons/hi";
 import { CardContainer, CardBottom } from "./styles";
 
 import Button from "../../../components/Button";
@@ -14,7 +19,7 @@ import Input from "../../../components/Input";
 
 const Type: React.FC = () => {
   const { id }: { id: string } = useParams();
-
+  const history = useHistory();
   const [name, setName] = useState<string>("");
 
   useEffect(() => {
@@ -30,6 +35,11 @@ const Type: React.FC = () => {
     if (id) data();
   }, [id]);
 
+  const handleDelete = async () => {
+    console.log("delete");
+    return;
+  };
+
   return (
     <Container>
       <SideBar visible={true} />
@@ -40,6 +50,30 @@ const Type: React.FC = () => {
             Voltar
           </Link>
           <h1>{id ? "Editando" : "Cadastrando"} um tipo exame</h1>
+          <Card>
+            <label>Tipos cadastrados:</label>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
+            >
+              <p>Nome do tipo</p>
+              <div>
+                <HiOutlinePencil
+                  onClick={() => history.push(`/edit-type/${1}`)}
+                  size={24}
+                />
+                <HiOutlineTrash
+                  className="down"
+                  size={24}
+                  onClick={handleDelete}
+                  style={{ marginLeft: 16 }}
+                />
+              </div>
+            </div>
+          </Card>
           <Card style={{ padding: 32 }}>
             <label htmlFor="name">Nome</label>
             <Input
@@ -53,7 +87,7 @@ const Type: React.FC = () => {
             <CardBottom>
               <Button type="submit">
                 <HiOutlineCheck size={56} />
-                <p>Criar</p>
+                <p>{id ? "Editar" : "Criar"}</p>
               </Button>
             </CardBottom>
           </Card>

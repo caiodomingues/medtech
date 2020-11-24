@@ -1,6 +1,6 @@
 import React from "react";
 import { HiOutlineTrash, HiOutlinePencil } from "react-icons/hi";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 import { CardContainer } from "./styles";
 
@@ -14,6 +14,11 @@ import Button from "../../components/Button";
 const Employees: React.FC = () => {
   const history = useHistory();
 
+  const handleDelete = async () => {
+    console.log("delete");
+    return;
+  };
+
   return (
     <Container>
       <SideBar visible={true} />
@@ -26,20 +31,20 @@ const Employees: React.FC = () => {
           </Button>
         </MenuBar>
         <CardContainer>
+          <h1>Funcionários</h1>
           <Card>
-            <h1>Teste</h1>
-            <p>
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Est
-              repellat magnam nulla itaque architecto temporibus similique
-              impedit odio ad fugit, perspiciatis, eius id quos officia
-              molestiae repudiandae accusamus ab voluptate.
-            </p>
+            <h1>Nome</h1>
+            <p>Outra informação</p>
             <br />
             <span>
-              <HiOutlinePencil size={24} />
+              <HiOutlinePencil
+                onClick={() => history.push(`/edit-employee/${1}`)}
+                size={24}
+              />
               <HiOutlineTrash
                 className="down"
                 size={24}
+                onClick={handleDelete}
                 style={{ marginLeft: 16 }}
               />
             </span>

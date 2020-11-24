@@ -64,7 +64,7 @@ const Create: React.FC = () => {
             <CardBottom>
               <Button type="submit">
                 <HiOutlineCheck size={56} />
-                <p>Criar</p>
+                <p>{id ? "Editar" : "Criar"}</p>
               </Button>
             </CardBottom>
           </Card>

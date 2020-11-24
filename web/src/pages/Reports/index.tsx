@@ -14,6 +14,11 @@ import Button from "../../components/Button";
 const Reports: React.FC = () => {
   const history = useHistory();
 
+  const handleDelete = async () => {
+    console.log("delete");
+    return;
+  };
+
   return (
     <Container>
       <SideBar visible={true} />
@@ -26,20 +31,20 @@ const Reports: React.FC = () => {
           </Button>
         </MenuBar>
         <CardContainer>
+          <h1>Relatórios</h1>
           <Card>
-            <h1>Teste</h1>
-            <p>
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Est
-              repellat magnam nulla itaque architecto temporibus similique
-              impedit odio ad fugit, perspiciatis, eius id quos officia
-              molestiae repudiandae accusamus ab voluptate.
-            </p>
+            <h1>Nome</h1>
+            <p>Outra informação</p>
             <br />
             <span>
-              <HiOutlinePencil size={24} />
+              <HiOutlinePencil
+                onClick={() => history.push(`/edit-report/${1}`)}
+                size={24}
+              />
               <HiOutlineTrash
                 className="down"
                 size={24}
+                onClick={handleDelete}
                 style={{ marginLeft: 16 }}
               />
             </span>
