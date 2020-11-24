@@ -19,16 +19,6 @@ class ExamsController {
     shelf_life,
   }: Request): Promise<Exams> {
     const examRepo = getRepository("Exams");
-    // const typeRepo = getRepository("ExamType");
-
-    // const examType = await typeRepo.findOne({
-    //   where: { id: examType_id },
-    // });
-
-    // if (!examType) {
-    //   throw new Error("Tipo de exame não encontrado ou inexistente");
-    // }
-
     const exams = examRepo.create({
       employee_id,
       examType_id,
