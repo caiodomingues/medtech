@@ -2,7 +2,7 @@ import { getRepository } from "typeorm";
 import { addDays, format } from "date-fns";
 
 import Exams from "../models/Exams";
-import TypeExam from "../models/ExamType";
+import ExamType from "../models/ExamType";
 
 interface Request {
   employee_id: string;
@@ -20,31 +20,31 @@ class ExamsController {
     date,
     shelf_life,
   }: Request): Promise<Exams> {
-    // const dataPassada = startOfHour(parseISO(data));
+    // const pastDate = startOfHour(parseISO(data));
     const examRepo = getRepository(Exams);
-    // const encontrarAgendamentoMesmaData = await agendamentosRespository.findOne(
-    //     { where: { data: dataPassada } }
+    // const findSameScheduleDate = await scheduleRepo.findOne(
+    //     { where: { data: pastDate } }
     // );
-    // if (encontrarAgendamentoMesmaData) {
+    // if (findSameScheduleDate) {
     //     throw new Error("Agendamento já cadastrado para este horário");
     // }
-    const typeRepo = getRepository(TypeExam);
+    const typeRepo = getRepository(ExamType);
 
-    const tipoExame = await typeRepo.findOne({
+    const examType = await typeRepo.findOne({
       where: { id: examType_id },
     });
 
-    if (!tipoExame) {
-      throw new Error("Não existe este tipo de exame");
+    if (!examType) {
+      throw new Error("Tipo de exame não encontrado ou inexistente");
     }
-    console.log(tipoExame);
+    console.log(examType);
     console.log(date);
 
     // const result = new Date(data);
-    // const shelf_life = addDays(data, tipoExame.validade);
+    // const shelf_life = addDays(data, examType.validade);
     // console.log(shelf_life);
 
-    const exames = examRepo.create({
+    const exams = examRepo.create({
       employee_id,
       razaoExame_id,
       examType_id,
@@ -52,9 +52,9 @@ class ExamsController {
       shelf_life,
     });
 
-    await examRepo.save(exames);
+    await examRepo.save(exams);
 
-    return exames;
+    return exams;
   }
 }
 
