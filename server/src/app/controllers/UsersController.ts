@@ -1,7 +1,7 @@
 import { getRepository } from "typeorm";
 import { hash } from "bcryptjs";
 
-import Users from "../models/Users";
+import Users from "../models/User";
 
 interface Request {
   name: string;
@@ -11,7 +11,7 @@ interface Request {
 
 class UsersController {
   public async store({ name, enrollment, password }: Request): Promise<Users> {
-    const usersRepository = getRepository(Users);
+    const usersRepository = getRepository("Users");
 
     const verificaUsuarioExiste = await usersRepository.findOne({
       where: { enrollment },

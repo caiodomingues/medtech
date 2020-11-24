@@ -27,7 +27,7 @@ employeesRouter.post("/", ensureAuthenticated, async (req, res) => {
 });
 
 employeesRouter.get("/", ensureAuthenticated, async (req, res) => {
-  const employeesRepo = getRepository(Employees);
+  const employeesRepo = getRepository("Employees");
   const employee = await employeesRepo.find();
   console.log(req.user);
 
@@ -35,7 +35,7 @@ employeesRouter.get("/", ensureAuthenticated, async (req, res) => {
 });
 
 employeesRouter.get("/:id", ensureAuthenticated, async (req, res) => {
-  const usersRepo = getRepository(Employees);
+  const usersRepo = getRepository("Employees");
   const { id } = req.params;
   const user = await usersRepo.findOne(id);
   return res.status(200).json(user);
@@ -43,7 +43,7 @@ employeesRouter.get("/:id", ensureAuthenticated, async (req, res) => {
 
 employeesRouter.put("/:id", ensureAuthenticated, async (req, res) => {
   const { name, cpf, efunction, cellphone, email, photo } = req.body;
-  const employeeRepo = getRepository(Employees);
+  const employeeRepo = getRepository("Employees");
   const { id } = req.params;
   const user = await employeeRepo.findOne(id);
 
@@ -61,7 +61,7 @@ employeesRouter.put("/:id", ensureAuthenticated, async (req, res) => {
 });
 
 employeesRouter.delete("/:id", ensureAuthenticated, async (req, res) => {
-  const employeesRepo = getRepository(Employees);
+  const employeesRepo = getRepository("Employees");
   const { id } = req.params;
   await employeesRepo.delete(id);
   return res.status(200).send();

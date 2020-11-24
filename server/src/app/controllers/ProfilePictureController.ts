@@ -1,7 +1,7 @@
 import { getRepository } from "typeorm";
 import path from "path";
 import fs from "fs";
-import Users from "../models/Users";
+import Users from "../models/User";
 
 import uploadConfig from "../../config/upload";
 

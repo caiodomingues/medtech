@@ -20,7 +20,7 @@ const Create: React.FC = () => {
   useEffect(() => {
     const data = async () => {
       return await api
-        .get("")
+        .get("?")
         .then((res) => {
           console.log(res.data);
         })

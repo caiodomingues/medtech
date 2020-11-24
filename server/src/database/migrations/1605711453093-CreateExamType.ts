@@ -23,10 +23,6 @@ export class CreateExamType1605711453093 implements MigrationInterface {
             type: "varchar",
           },
           {
-            name: "shelf_life",
-            type: "integer",
-          },
-          {
             name: "created_at",
             type: "timestamp",
             default: "now()",

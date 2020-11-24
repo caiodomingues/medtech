@@ -16,9 +16,6 @@ class ExamType {
   @Column()
   name: string;
 
-  @Column("time with time zone")
-  shelf_life: number;
-
   @CreateDateColumn()
   created_at: Date;
 

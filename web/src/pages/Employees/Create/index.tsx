@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useHistory } from "react-router-dom";
 import api from "../../../services/api";
 
 import { HiArrowLeft, HiOutlineCheck } from "react-icons/hi";
@@ -14,8 +14,10 @@ import Input from "../../../components/Input";
 
 const Create: React.FC = () => {
   const { id }: { id: string } = useParams();
+  const history = useHistory();
 
   const [name, setName] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
   const [cpf, setCpf] = useState<string>("");
   const [cellphone, setCellphone] = useState<string>("");
   const [efunction, setEfunction] = useState<string>("");
@@ -23,16 +25,45 @@ const Create: React.FC = () => {
 
   useEffect(() => {
     const data = async () => {
-      return await api
-        .get("")
-        .then((res) => {
-          console.log(res.data);
-        })
-        .catch((err) => console.log(err));
+      if (id) {
+        await api
+          .get(`/employees/${id}`)
+          .then((res) => {
+            console.log(res.data);
+            setName(res.data.name);
+            setCpf(res.data.cpf);
+            setEmail(res.data.email);
+            setCellphone(res.data.cellphone);
+            setEfunction(res.data.efunction);
+          })
+          .catch((err) => console.log(err));
+      }
     };
 
-    if (id) data();
+    data();
   }, [id]);
+
+  const handleSubmit = async () => {
+    if (id) {
+      await api
+        .put(`/employees/${id}`, { name, cpf, cellphone, efunction, email })
+        .then((res) => {
+          history.push("/employees");
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      await api
+        .post("/employees", { name, cpf, cellphone, efunction, email })
+        .then((res) => {
+          history.push("/employees");
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  };
 
   return (
     <Container>
@@ -55,6 +86,16 @@ const Create: React.FC = () => {
               value={name}
             />
             <br />
+            <label htmlFor="email">Endereço de E-mail</label>
+            <Input
+              type="email"
+              id="email"
+              name="email"
+              placeholder="exemplo@email.com"
+              onChange={(e) => setEmail(e.target.value)}
+              value={email}
+            />
+            <br />
             <label htmlFor="cpf">CPF</label>
             <Input
               type="text"
@@ -70,7 +111,7 @@ const Create: React.FC = () => {
               type="text"
               id="cell_phone"
               name="cell_phone"
-              placeholder="000.000.000-00"
+              placeholder="(00) 00000-0000"
               onChange={(e) => setCellphone(e.target.value)}
               value={cellphone}
             />
@@ -95,7 +136,7 @@ const Create: React.FC = () => {
               value={file}
             />
             <CardBottom>
-              <Button type="submit">
+              <Button type="submit" onClick={handleSubmit}>
                 <HiOutlineCheck size={56} />
                 {id ? "Editar" : "Criar"}
               </Button>

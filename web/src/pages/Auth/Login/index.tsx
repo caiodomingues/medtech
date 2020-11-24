@@ -1,7 +1,8 @@
-import React, { FormEvent } from "react";
+import React, { FormEvent, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
-import { HiArrowLeft, HiOutlineDownload } from "react-icons/hi";
+import { useAuth } from "../../../utils/AuthContext";
 
+import { HiArrowLeft, HiOutlineDownload } from "react-icons/hi";
 import { CardContainer, CardBottom } from "./styles";
 
 import Button from "../../../components/Button";
@@ -11,11 +12,18 @@ import Card from "../../../components/Card";
 import Input from "../../../components/Input";
 
 const Login: React.FC = () => {
+  const [enrollment, setEnrollment] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const { signIn, signed } = useAuth();
   const history = useHistory();
+
+  if(signed) history.push('/employees');
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
+    if (!enrollment || !password) return;
 
+    signIn!({ enrollment, password });
     history.push("/employees");
   };
 
@@ -36,6 +44,8 @@ const Login: React.FC = () => {
                 id="enrollment"
                 name="enrollment"
                 placeholder="0123456789"
+                onChange={(e) => setEnrollment(e.target.value)}
+                value={enrollment}
               />
               <br />
               <label htmlFor="password">Senha</label>
@@ -44,6 +54,8 @@ const Login: React.FC = () => {
                 id="password"
                 name="password"
                 placeholder="********"
+                onChange={(e) => setPassword(e.target.value)}
+                value={password}
               />
               <CardBottom>
                 <div className="column">

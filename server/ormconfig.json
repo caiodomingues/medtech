@@ -3,10 +3,10 @@
   "host": "localhost",
   "port": 5432,
   "username": "postgres",
-  "password": "123123",
+  "password": "123456",
   "database": "medtech",
-  "entities": ["./src/app/models/*.ts"],
-  "migrations": ["./src/database/migrations/*.ts"],
+  "entities": ["./dist/app/models/*.js"],
+  "migrations": ["./dist/database/migrations/*.js"],
   "cli": {
     "migrationsDir": "./src/database/migrations"
   }

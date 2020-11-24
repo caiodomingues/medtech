@@ -3,7 +3,7 @@ import { getRepository } from "typeorm";
 import multer from "multer";
 
 import UsersController from "../app/controllers/UsersController";
-import Users from "../app/models/Users";
+import Users from "../app/models/User";
 import ensureAuthenticated from "../middlewares/ensureAuthenticated";
 import uploadConfig from "../config/upload";
 import ProfilePictureController from "../app/controllers/ProfilePictureController";
@@ -33,7 +33,7 @@ usersRouter.post("/", async (req, res) => {
 });
 
 usersRouter.get("/", ensureAuthenticated, async (req, res) => {
-  const usersRepo = getRepository(Users);
+  const usersRepo = getRepository("Users");
   const user = await usersRepo.find();
   console.log(req.user);
 
@@ -41,14 +41,14 @@ usersRouter.get("/", ensureAuthenticated, async (req, res) => {
 });
 
 usersRouter.get("/:id", ensureAuthenticated, async (req, res) => {
-  const usersRepo = getRepository(Users);
+  const usersRepo = getRepository("Users");
   const { id } = req.params;
   const user = await usersRepo.findOne(id);
   return res.status(200).json(user);
 });
 
 usersRouter.delete("/:id", ensureAuthenticated, async (req, res) => {
-  const usersRepo = getRepository(Users);
+  const usersRepo = getRepository("Users");
   const { id } = req.params;
   await usersRepo.delete(id);
   return res.status(200).send();

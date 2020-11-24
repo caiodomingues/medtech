@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useHistory, useParams } from "react-router-dom";
 import api from "../../../services/api";
+import { ExamType } from "../../../types";
 
 import {
   HiArrowLeft,
@@ -21,23 +22,66 @@ const Type: React.FC = () => {
   const { id }: { id: string } = useParams();
   const history = useHistory();
   const [name, setName] = useState<string>("");
+  const [examTypes, setExamTypes] = useState<ExamType[]>([]);
 
   useEffect(() => {
     const data = async () => {
-      return await api
-        .get("")
+      if (id) {
+        await api
+          .get(`exams-types/${id}`)
+          .then((res) => {
+            setName(res.data.name);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
+
+      await api
+        .get("exams-types")
         .then((res) => {
-          console.log(res.data);
+          setExamTypes(res.data);
         })
-        .catch((err) => console.log(err));
+        .catch((err) => {
+          console.log(err);
+        });
     };
 
-    if (id) data();
+    data();
   }, [id]);
 
-  const handleDelete = async () => {
-    console.log("delete");
-    return;
+  const handleDelete = async (id: string) => {
+    await api
+      .delete(`exams-types/${id}`)
+      .then((res) => {
+        history.push("/exams");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const handleSubmit = async () => {
+    if (id) {
+      await api
+        .put(`exams-types/${id}`, { name })
+        .then((res) => {
+          setName("");
+          history.push("/create-type");
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      await api
+        .post("exams-types", { name })
+        .then((res) => {
+          setName("");
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   };
 
   return (
@@ -52,27 +96,33 @@ const Type: React.FC = () => {
           <h1>{id ? "Editando" : "Cadastrando"} um tipo exame</h1>
           <Card>
             <label>Tipos cadastrados:</label>
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-              }}
-            >
-              <p>Nome do tipo</p>
-              <div>
-                <HiOutlinePencil
-                  onClick={() => history.push(`/edit-type/${1}`)}
-                  size={24}
-                />
-                <HiOutlineTrash
-                  className="down"
-                  size={24}
-                  onClick={handleDelete}
-                  style={{ marginLeft: 16 }}
-                />
-              </div>
-            </div>
+            {examTypes &&
+              examTypes.map((t: ExamType) => (
+                <div
+                  key={t.id}
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                  }}
+                >
+                  <p>
+                    {t.name}
+                  </p>
+                  <div>
+                    <HiOutlinePencil
+                      onClick={() => history.push(`/edit-type/${t.id}`)}
+                      size={24}
+                    />
+                    <HiOutlineTrash
+                      className="down"
+                      size={24}
+                      onClick={() => handleDelete(t.id)}
+                      style={{ marginLeft: 16 }}
+                    />
+                  </div>
+                </div>
+              ))}
           </Card>
           <Card style={{ padding: 32 }}>
             <label htmlFor="name">Nome</label>
@@ -85,7 +135,7 @@ const Type: React.FC = () => {
               onChange={(e) => setName(e.target.value)}
             />
             <CardBottom>
-              <Button type="submit">
+              <Button type="submit" onClick={handleSubmit}>
                 <HiOutlineCheck size={56} />
                 <p>{id ? "Editar" : "Criar"}</p>
               </Button>

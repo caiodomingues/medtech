@@ -9,11 +9,10 @@ const typeRouter = Router();
 
 typeRouter.post("/", ensureAuthenticated, async (req, res) => {
   try {
-    const { name, shelf_life } = req.body;
+    const { name } = req.body;
     const typeController = new ExamTypeController();
     const Type = await typeController.store({
       name,
-      shelf_life,
     });
 
     return res.status(200).json(Type);
@@ -23,22 +22,28 @@ typeRouter.post("/", ensureAuthenticated, async (req, res) => {
 });
 
 typeRouter.get("/", ensureAuthenticated, async (req, res) => {
-  const typeRepo = getRepository(ExamType);
+  const typeRepo = getRepository("ExamType");
   const Type = await typeRepo.find();
-  console.log(req.user);
+
+  return res.status(200).json(Type);
+});
+
+typeRouter.get("/:id", ensureAuthenticated, async (req, res) => {
+  const typeRepo = getRepository("ExamType");
+  const { id } = req.params;
+  const Type = await typeRepo.findOne(id);
 
   return res.status(200).json(Type);
 });
 
 typeRouter.put("/:id", ensureAuthenticated, async (req, res) => {
-  const { name, shelf_life } = req.body;
-  const typeRepo = getRepository(ExamType);
+  const { name } = req.body;
+  const typeRepo = getRepository("ExamType");
   const { id } = req.params;
   const _type = await typeRepo.findOne(id);
 
   const Type = typeRepo.create({
     name,
-    shelf_life,
   });
   const respo = await typeRepo.save({ ..._type, ...Type });
 
@@ -46,7 +51,7 @@ typeRouter.put("/:id", ensureAuthenticated, async (req, res) => {
 });
 
 typeRouter.delete("/:id", ensureAuthenticated, async (req, res) => {
-  const typeRepo = getRepository(ExamType);
+  const typeRepo = getRepository("ExamType");
   const { id } = req.params;
   await typeRepo.delete(id);
   return res.status(200).send();

@@ -24,11 +24,6 @@ export class CreateExams1605711972381 implements MigrationInterface {
             isNullable: true,
           },
           {
-            name: "razaoExame_id",
-            type: "uuid",
-            isNullable: true,
-          },
-          {
             name: "examType_id",
             type: "uuid",
             isNullable: true,
@@ -38,8 +33,8 @@ export class CreateExams1605711972381 implements MigrationInterface {
             type: "timestamp with time zone",
           },
           {
-            name: "shelf-Life",
-            type: "timestamp with time zone",
+            name: "shelf_life",
+            type: "integer",
           },
           {
             name: "created_at",
@@ -61,17 +56,6 @@ export class CreateExams1605711972381 implements MigrationInterface {
         columnNames: ["employee_id"],
         referencedColumnNames: ["id"],
         referencedTableName: "Employees",
-        onDelete: "SET NULL",
-        onUpdate: "CASCADE",
-      })
-    );
-
-    await queryRunner.createForeignKey(
-      "Exams",
-      new TableForeignKey({
-        columnNames: ["razaoExame_id"],
-        referencedColumnNames: ["id"],
-        referencedTableName: "RazaoExame",
         onDelete: "SET NULL",
         onUpdate: "CASCADE",
       })

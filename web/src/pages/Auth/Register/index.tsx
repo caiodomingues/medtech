@@ -1,6 +1,7 @@
-import React, { FormEvent } from "react";
+import React, { FormEvent, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { HiArrowLeft, HiOutlineDownload } from "react-icons/hi";
+import { useAuth } from "../../../utils/AuthContext";
 
 import { CardContainer, CardBottom } from "./styles";
 
@@ -13,22 +14,25 @@ import Lead from "../../../components/Lead";
 import Input from "../../../components/Input";
 
 const Register: React.FC = () => {
+  const [name, setName] = useState<string>("");
+  const [enrollment, setEnrollment] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+
+  const { register, signed } = useAuth();
   const history = useHistory();
+
+  if(signed) history.push('/employees');
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
+    if (!enrollment || !password) return;
 
-    history.push("/events");
+    register!({ name, enrollment, password });
+    history.push("/employees");
   };
 
   return (
     <Container>
-      <SideBar>
-        <Lead>
-          <h1>MedTech</h1>
-          <p>Você está prestes a criar a sua conta ;)</p>
-        </Lead>
-      </SideBar>
       <Content>
         <CardContainer>
           <Link to="/">
@@ -39,14 +43,23 @@ const Register: React.FC = () => {
           <Card style={{ padding: 32 }}>
             <form onSubmit={handleSubmit}>
               <label htmlFor="name">Nome</label>
-              <Input type="text" id="name" name="name" placeholder="John Doe" />
-              <br />
-              <label htmlFor="email">Endereço de e-mail</label>
               <Input
-                type="email"
-                id="email"
-                name="email"
-                placeholder="exemplo@email.com"
+                type="text"
+                id="name"
+                name="name"
+                placeholder="Fulano de Tal"
+                onChange={(e) => setName(e.target.value)}
+                value={name}
+              />
+              <br />
+              <label htmlFor="enrollment">Matrícula</label>
+              <Input
+                type="text"
+                id="enrollment"
+                name="enrollment"
+                placeholder="0123456789"
+                onChange={(e) => setEnrollment(e.target.value)}
+                value={enrollment}
               />
               <br />
               <label htmlFor="password">Senha</label>
@@ -55,14 +68,8 @@ const Register: React.FC = () => {
                 id="password"
                 name="password"
                 placeholder="********"
-              />
-              <br />
-              <label htmlFor="c_password">Confirme a Senha</label>
-              <Input
-                type="password"
-                id="c_password"
-                name="password"
-                placeholder="********"
+                onChange={(e) => setPassword(e.target.value)}
+                value={password}
               />
               <CardBottom>
                 <p>

@@ -19,7 +19,7 @@ class EmployeesController {
     email,
     photo,
   }: Request): Promise<Employees> {
-    const employeesRepo = getRepository(Employees);
+    const employeesRepo = getRepository("Employees");
 
     const employee = employeesRepo.create({
       name,

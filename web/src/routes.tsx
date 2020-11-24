@@ -1,5 +1,6 @@
 import React from "react";
-import { Switch, Route, BrowserRouter } from "react-router-dom";
+import { Switch, Route, BrowserRouter, useHistory } from "react-router-dom";
+import { useAuth } from "./utils/AuthContext";
 
 import Home from "./pages/Home";
 import NotFound from "./pages/Error/NotFound";
@@ -18,26 +19,41 @@ import ExamsTypeCreate from "./pages/Exams/Type";
 import Reports from "./pages/Reports";
 import ReportsCreate from "./pages/Reports/Create";
 
+const ProtectedRoute = ({
+  path,
+  component,
+}: {path: string, component: any}): JSX.Element => {
+  const { signed } = useAuth();
+  const history = useHistory();
+
+  if (signed) {
+    return <Route path={path} component={component} />;
+  } else {
+    history.push("/login");
+    return <p>Redirecting...</p>;
+  }
+};
+
 function Routes() {
   return (
     <BrowserRouter>
       <Switch>
-        <Route path="/" exact component={Home} />
-        <Route path="/login" component={Login} />
-        <Route path="/register" component={Register} />
-        <Route path="/employees" component={Employees} />
-        <Route path="/create-employee" component={EmployeesCreate} />
-        <Route path="/edit-employee/:id" component={EmployeesCreate} />
-        <Route path="/exams" component={Exams} />
-        <Route path="/execution" component={ExamsExecution} />
-        <Route path="/create-exam" component={ExamsCreate} />
-        <Route path="/edit-exam/:id" component={ExamsCreate} />
-        <Route path="/create-type" component={ExamsTypeCreate} />
-        <Route path="/edit-type/:id" component={ExamsTypeCreate} />
-        <Route path="/reports" component={Reports} />
-        <Route path="/create-report" component={ReportsCreate} />
-        <Route path="/edit-report/:id" component={ReportsCreate} />
-        <Route component={NotFound} />
+          <Route path="/" exact component={Home} />
+          <Route path="/login" component={Login} />
+          <Route path="/register" component={Register} />
+          <ProtectedRoute path="/employees" component={Employees} />
+          <ProtectedRoute path="/create-employee" component={EmployeesCreate} />
+          <ProtectedRoute path="/edit-employee/:id" component={EmployeesCreate} />
+          <ProtectedRoute path="/exams" component={Exams} />
+          <ProtectedRoute path="/execution" component={ExamsExecution} />
+          <ProtectedRoute path="/create-exam" component={ExamsCreate} />
+          <ProtectedRoute path="/edit-exam/:id" component={ExamsCreate} />
+          <ProtectedRoute path="/create-type" component={ExamsTypeCreate} />
+          <ProtectedRoute path="/edit-type/:id" component={ExamsTypeCreate} />
+          <ProtectedRoute path="/reports" component={Reports} />
+          <ProtectedRoute path="/create-report" component={ReportsCreate} />
+          <ProtectedRoute path="/edit-report/:id" component={ReportsCreate} />
+          <Route component={NotFound} />
       </Switch>
     </BrowserRouter>
   );

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useHistory } from "react-router-dom";
 import api from "../../../services/api";
+import { Exam } from "../../../types";
 
 import { HiArrowLeft, HiOutlineCheck } from "react-icons/hi";
 import { CardContainer, CardBottom } from "./styles";
@@ -14,22 +15,63 @@ import Input from "../../../components/Input";
 
 const Create: React.FC = () => {
   const { id }: { id: string } = useParams();
+  const history = useHistory();
 
   const [name, setName] = useState<string>("");
-  const [shelfLife, setShelfLife] = useState<number>();
+  const [shelfLife, setShelfLife] = useState<string>("");
+  const [exams, setExams] = useState<Exam[]>([]);
 
   useEffect(() => {
     const data = async () => {
-      return await api
-        .get("")
+      if (id) {
+        await api
+          .get(`exams/${id}`)
+          .then((res) => {
+            setName(res.data.name);
+            setShelfLife(res.data.shelfLife);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
+
+      await api
+        .get("exams")
         .then((res) => {
-          console.log(res.data);
+          setExams(res.data);
         })
-        .catch((err) => console.log(err));
+        .catch((err) => {
+          console.log(err);
+        });
     };
 
-    if (id) data();
+    data();
   }, [id]);
+
+  const handleSubmit = async () => {
+    if (id) {
+      await api
+        .put(`exams/${id}`, { name, shelf_life: shelfLife })
+        .then((res) => {
+          setName("");
+          setShelfLife("");
+          history.push("/create-exam");
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      await api
+        .post("exams", { name, shelf_life: shelfLife })
+        .then((res) => {
+          setName("");
+          setShelfLife("");
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  };
 
   return (
     <Container>
@@ -58,7 +100,7 @@ const Create: React.FC = () => {
               id="shelf_life"
               name="shelf_life"
               placeholder="00"
-              onChange={(e) => setShelfLife(e.target.valueAsNumber)}
+              onChange={(e) => setShelfLife(e.target.value)}
               value={shelfLife}
             />
             <CardBottom>

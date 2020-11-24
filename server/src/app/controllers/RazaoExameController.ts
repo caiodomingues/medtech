@@ -1,22 +1,22 @@
-import { getRepository } from "typeorm";
-import RazaoExame from "../models/RazaoExame";
+// import { getRepository } from "typeorm";
+// import RazaoExame from "../models/RazaoExame";
 
-interface Request {
-  razao: string;
-}
+// interface Request {
+//   razao: string;
+// }
 
-class RazaoExameController {
-  public async store({ razao }: Request): Promise<RazaoExame> {
-    const razaoExameRepo = getRepository(RazaoExame);
+// class RazaoExameController {
+//   public async store({ razao }: Request): Promise<RazaoExame> {
+//     const razaoExameRepo = getRepository(RazaoExame);
 
-    const Razao = razaoExameRepo.create({
-      razao,
-    });
+//     const Razao = razaoExameRepo.create({
+//       razao,
+//     });
 
-    await razaoExameRepo.save(Razao);
+//     await razaoExameRepo.save(Razao);
 
-    return Razao;
-  }
-}
+//     return Razao;
+//   }
+// }
 
-export default RazaoExameController;
+// export default RazaoExameController;

@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { HiOutlineTrash, HiOutlinePencil } from "react-icons/hi";
 import { useHistory } from "react-router-dom";
+import { Report } from "../../types";
+import api from "../../services/api";
 
 import { CardContainer } from "./styles";
 
@@ -13,10 +15,32 @@ import Button from "../../components/Button";
 
 const Reports: React.FC = () => {
   const history = useHistory();
+  const [reports, setReports] = useState<Report[]>([]);
 
-  const handleDelete = async () => {
-    console.log("delete");
-    return;
+  useEffect(() => {
+    const data = async () => {
+      await api
+        .get("?")
+        .then((res) => {
+          setReports(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    };
+
+    data();
+  }, []);
+
+  const handleDelete = async (id: string) => {
+    await api
+      .delete(`?/${id}`)
+      .then((res) => {
+        history.push("/reports");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (
@@ -32,23 +56,26 @@ const Reports: React.FC = () => {
         </MenuBar>
         <CardContainer>
           <h1>Relatórios</h1>
-          <Card>
-            <h1>Nome</h1>
-            <p>Outra informação</p>
-            <br />
-            <span>
-              <HiOutlinePencil
-                onClick={() => history.push(`/edit-report/${1}`)}
-                size={24}
-              />
-              <HiOutlineTrash
-                className="down"
-                size={24}
-                onClick={handleDelete}
-                style={{ marginLeft: 16 }}
-              />
-            </span>
-          </Card>
+          {reports &&
+            reports.map((r) => (
+              <Card>
+                <h1>{r.name}</h1>
+                <p>Outra informação</p>
+                <br />
+                <span>
+                  <HiOutlinePencil
+                    onClick={() => history.push(`/edit-report/${r.id}`)}
+                    size={24}
+                  />
+                  <HiOutlineTrash
+                    className="down"
+                    size={24}
+                    onClick={() => handleDelete(r.id)}
+                    style={{ marginLeft: 16 }}
+                  />
+                </span>
+              </Card>
+            ))}
         </CardContainer>
       </Content>
     </Container>

@@ -79,7 +79,7 @@ const Execution: React.FC = () => {
               type="datetime-local"
               id="exam_date"
               name="exam_date"
-              placeholder="Nome do tipo de exame"
+              placeholder="00/00/00"
               value={date}
               onChange={(e) => setDate(e.target.value)}
             />

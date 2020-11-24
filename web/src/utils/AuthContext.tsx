@@ -15,11 +15,12 @@ export function AuthProvider({ children }: any) {
   const [user, setUser] = useState("");
   const [signed, setSigned] = useState(false);
 
+
   useEffect(() => {
     async function loadStorageData() {
       setLoading(true);
-      const storagedToken = localStorage.getItem("maskclub_token");
-      const _user = localStorage.getItem("maskclub_user");
+      const storagedToken = localStorage.getItem("medtech_token");
+      const _user = localStorage.getItem("medtech_user");
 
       if (storagedToken) {
         setSigned(true);
@@ -34,19 +35,19 @@ export function AuthProvider({ children }: any) {
   }, []);
 
   async function saveUser(token: string, user: UserProps) {
-    localStorage.setItem("maskclub_token", token);
-    localStorage.setItem("maskclub_user", JSON.stringify(user));
+    localStorage.setItem("medtech_token", token);
+    localStorage.setItem("medtech_user", JSON.stringify(user));
   }
 
   async function signIn(credentials: LoginCredentials) {
     setLoading(true);
     await api
-      .post("/login", credentials)
+      .post("/sessions", credentials)
       .then(async (res) => {
-        console.log(res);
-        // await saveUser(res.data.data.token, res.data.user);
+        await saveUser(res.data.token, res.data.user);
         setSigned(true);
         setLoading(false);
+
       })
       .catch((err) => {
         setLoading(false);
@@ -56,8 +57,8 @@ export function AuthProvider({ children }: any) {
 
   async function signOut() {
     setLoading(true);
-    localStorage.removeItem("maskclub_token");
-    localStorage.removeItem("maskclub_user");
+    localStorage.removeItem("medtech_token");
+    localStorage.removeItem("medtech_user");
     setSigned(false);
     setLoading(false);
   }
@@ -65,12 +66,9 @@ export function AuthProvider({ children }: any) {
   async function register(credentials: RegisterCredentials) {
     setLoading(true);
     await api
-      .post("/register", credentials)
+      .post("/users", credentials)
       .then(async (res) => {
-        console.log(res);
-        // await saveUser(res.data.token, res.data.user);
-        setSigned(true);
-        setLoading(false);
+        signIn({ enrollment: credentials.enrollment, password: credentials.password });
       })
       .catch((err) => {
         setLoading(false);
