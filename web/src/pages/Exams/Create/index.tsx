@@ -56,6 +56,7 @@ const Create: React.FC = () => {
         .then((res) => {
           setName("");
           setShelfLife("");
+          history.push("/create-exam");
         })
         .catch((err) => {
           console.log(err);
@@ -94,7 +95,7 @@ const Create: React.FC = () => {
               value={shelfLife}
             />
             <CardBottom>
-              <Button type="submit">
+              <Button type="submit" onClick={handleSubmit}>
                 <HiOutlineCheck size={56} />
                 <p>{id ? "Editar" : "Criar"}</p>
               </Button>

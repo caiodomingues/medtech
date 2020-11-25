@@ -96,7 +96,7 @@ const Type: React.FC = () => {
           <h1>{id ? "Editando" : "Cadastrando"} um tipo exame</h1>
           <Card>
             <label>Tipos cadastrados:</label>
-            {examTypes &&
+            {examTypes > 0 ? (
               examTypes.map((t: ExamType) => (
                 <div
                   key={t.id}
@@ -106,9 +106,7 @@ const Type: React.FC = () => {
                     alignItems: "center",
                   }}
                 >
-                  <p>
-                    {t.name}
-                  </p>
+                  <p>{t.name}</p>
                   <div>
                     <HiOutlinePencil
                       onClick={() => history.push(`/edit-type/${t.id}`)}
@@ -122,7 +120,10 @@ const Type: React.FC = () => {
                     />
                   </div>
                 </div>
-              ))}
+              ))
+            ) : (
+              <p>Nenhum tipo ainda foi cadastrado</p>
+            )}
           </Card>
           <Card style={{ padding: 32 }}>
             <label htmlFor="name">Nome</label>
