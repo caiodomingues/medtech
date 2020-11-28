@@ -1,5 +1,5 @@
 import React from "react";
-import { HiOutlineDownload, HiOutlineUserAdd } from "react-icons/hi";
+import { HiOutlineDownload } from "react-icons/hi";
 import { Link } from "react-router-dom";
 
 import {
@@ -32,17 +32,6 @@ const Home: React.FC = () => {
                 </CardIcon>
                 <CardContent>
                   <h1>Entrar</h1>
-                </CardContent>
-              </Link>
-            </Card>
-
-            <Card>
-              <Link className="clickable row" to="/register">
-                <CardIcon>
-                  <HiOutlineUserAdd size={42} />
-                </CardIcon>
-                <CardContent>
-                  <h1>Registrar</h1>
                 </CardContent>
               </Link>
             </Card>

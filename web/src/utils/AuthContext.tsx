@@ -68,7 +68,7 @@ export function AuthProvider({ children }: any) {
     await api
       .post("/users", credentials)
       .then(async (res) => {
-        signIn({ enrollment: credentials.enrollment, password: credentials.password });
+        signIn({ email: credentials.email, password: credentials.password });
       })
       .catch((err) => {
         setLoading(false);

@@ -6,16 +6,14 @@ import { useAuth } from "../../../utils/AuthContext";
 import { CardContainer, CardBottom } from "./styles";
 
 import Button from "../../../components/Button";
-import SideBar from "../../../components/SideBar";
 import Content from "../../../components/Content";
 import Container from "../../../components/Container";
 import Card from "../../../components/Card";
-import Lead from "../../../components/Lead";
 import Input from "../../../components/Input";
 
 const Register: React.FC = () => {
   const [name, setName] = useState<string>("");
-  const [enrollment, setEnrollment] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
   const { register, signed } = useAuth();
@@ -25,9 +23,9 @@ const Register: React.FC = () => {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    if (!enrollment || !password) return;
+    if (!email || !password) return;
 
-    register!({ name, enrollment, password });
+    register!({ name, email, password });
     history.push("/employees");
   };
 
@@ -52,14 +50,14 @@ const Register: React.FC = () => {
                 value={name}
               />
               <br />
-              <label htmlFor="enrollment">Matrícula</label>
+              <label htmlFor="email">Endereço de e-mail</label>
               <Input
-                type="text"
-                id="enrollment"
-                name="enrollment"
+                type="email"
+                id="email"
+                name="email"
                 placeholder="0123456789"
-                onChange={(e) => setEnrollment(e.target.value)}
-                value={enrollment}
+                onChange={(e) => setEmail(e.target.value)}
+                value={email}
               />
               <br />
               <label htmlFor="password">Senha</label>

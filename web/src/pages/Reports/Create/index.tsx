@@ -15,20 +15,24 @@ import Input from "../../../components/Input";
 const Create: React.FC = () => {
   const { id }: { id: string } = useParams();
 
-  const [name, setName] = useState<string>("");
+  const [scheduleDate, setScheduleDate] = useState<string>("");
+  const [scheduleHour, setScheduleHour] = useState<string>("");
+  const [patient, setPatient] = useState<string>("");
+  const [medic, setMedic] = useState<string>("");
+  const [speciality, setSpeciality] = useState<string>("");
 
-  useEffect(() => {
-    const data = async () => {
-      return await api
-        .get("?")
-        .then((res) => {
-          console.log(res.data);
-        })
-        .catch((err) => console.log(err));
-    };
+  // useEffect(() => {
+  //   const data = async () => {
+  //     return await api
+  //       .get("?")
+  //       .then((res) => {
+  //         console.log(res.data);
+  //       })
+  //       .catch((err) => console.log(err));
+  //   };
 
-    if (id) data();
-  }, [id]);
+  //   if (id) data();
+  // }, [id]);
 
   return (
     <Container>
@@ -39,16 +43,56 @@ const Create: React.FC = () => {
             <HiArrowLeft size={12} style={{ marginRight: 8 }} />
             Voltar
           </Link>
-          <h1>{id ? "Editando" : "Criando"} um relatório</h1>
+          <h1>{id ? "Editando um agendamento" : "Agendando uma consulta"}</h1>
           <Card style={{ padding: 32 }}>
-            <label htmlFor="name">Nome</label>
+            <label htmlFor="scheduleDate">Data da Consulta</label>
+            <Input
+              type="date"
+              id="scheduleDate"
+              name="scheduleDate"
+              placeholder="__/__/____"
+              value={scheduleDate}
+              onChange={(e) => setScheduleDate(e.target.value)}
+            />
+            <br />
+            <label htmlFor="scheduleHour">Hora da Consulta</label>
+            <Input
+              type="time"
+              id="scheduleHour"
+              name="scheduleHour"
+              placeholder="00:00"
+              value={scheduleHour}
+              onChange={(e) => setScheduleHour(e.target.value)}
+            />
+            <br />
+            <label htmlFor="patient">Paciente</label>
             <Input
               type="text"
-              id="name"
-              name="name"
-              placeholder="Nome do relatório"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
+              id="patient"
+              name="patient"
+              placeholder="Nome do Paciente"
+              value={patient}
+              onChange={(e) => setPatient(e.target.value)}
+            />
+            <br />
+            <label htmlFor="medic">Médico</label>
+            <Input
+              type="text"
+              id="medic"
+              name="medic"
+              placeholder="Nome do Médico"
+              value={medic}
+              onChange={(e) => setMedic(e.target.value)}
+            />
+            <br />
+            <label htmlFor="speciality">Especialidade</label>
+            <Input
+              type="text"
+              id="speciality"
+              name="speciality"
+              placeholder="Especialidade"
+              value={speciality}
+              onChange={(e) => setSpeciality(e.target.value)}
             />
             <CardBottom>
               <Button type="submit">

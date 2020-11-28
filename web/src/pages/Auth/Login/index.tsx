@@ -1,6 +1,5 @@
 import React, { FormEvent, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
-import { useAuth } from "../../../utils/AuthContext";
 
 import { HiArrowLeft, HiOutlineDownload } from "react-icons/hi";
 import { CardContainer, CardBottom } from "./styles";
@@ -12,19 +11,13 @@ import Card from "../../../components/Card";
 import Input from "../../../components/Input";
 
 const Login: React.FC = () => {
-  const [enrollment, setEnrollment] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const { signIn, signed } = useAuth();
   const history = useHistory();
-
-  if(signed) history.push('/employees');
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    if (!enrollment || !password) return;
-
-    signIn!({ enrollment, password });
-    history.push("/employees");
+    history.push("/reports");
   };
 
   return (
@@ -38,14 +31,14 @@ const Login: React.FC = () => {
           <h1>Login</h1>
           <Card style={{ padding: 32 }}>
             <form onSubmit={handleSubmit}>
-              <label htmlFor="enrollment">Matrícula</label>
+              <label htmlFor="email">Endereço de e-mail</label>
               <Input
-                type="text"
-                id="enrollment"
-                name="enrollment"
+                type="email"
+                id="email"
+                name="email"
                 placeholder="0123456789"
-                onChange={(e) => setEnrollment(e.target.value)}
-                value={enrollment}
+                onChange={(e) => setEmail(e.target.value)}
+                value={email}
               />
               <br />
               <label htmlFor="password">Senha</label>
@@ -59,7 +52,7 @@ const Login: React.FC = () => {
               />
               <CardBottom>
                 <div className="column">
-                  <Link to="/">Esqueceu sua matrícula?</Link>
+                  <Link to="/">Esqueceu sua endereço de e-mail?</Link>
                   <br />
                   <Link to="/">Esqueceu sua senha?</Link>
                 </div>

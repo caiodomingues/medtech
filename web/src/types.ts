@@ -13,14 +13,12 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {}
 
 export interface UserProps {
   name: string;
-  email: string;
-  enrollment: string | number;
-  cpf: string | number;
-  photo: string;
+  email?: string;
+  speciality?: string;
 }
 
 export interface LoginCredentials {
-  enrollment: string;
+  email: string;
   password: string;
 }
 
@@ -40,37 +38,4 @@ export interface AuthContextProps {
 
 export interface RouteParams {
   id: string | number | null;
-}
-
-export interface Employee {
-  id: string;
-  name: string;
-  email: string;
-  cpf: string;
-  cellphone: string;
-  efunction: string;
-  created_at: string;
-  updated_at: string;
-}
-
-export interface Report {
-  id: string;
-  name: string;
-  created_at: string;
-  updated_at: string;
-}
-
-export interface Exam {
-  id: string;
-  name: string;
-  shelf_life: string | number;
-  created_at: string;
-  updated_at: string;
-}
-
-export interface ExamType {
-  id: string;
-  name: string;
-  created_at: string;
-  updated_at: string;
 }

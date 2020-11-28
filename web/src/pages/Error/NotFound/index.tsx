@@ -19,7 +19,7 @@ const NotFound: React.FC = () => {
           <Card>
             <h1>Ops...</h1>
             <p>Erro 404</p>
-            <p>Certifique-se de que está tentando acessar a página certa :/</p>
+            <p>Certifique-se de que está tentando acessar a página certa 🤔</p>
             <CardBottom>
               <Button type="button" onClick={() => history.goBack()}>
                 <HiOutlineArrowLeft size={24} color="#000" />
