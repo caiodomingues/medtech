@@ -21,14 +21,14 @@ patientRouter.post("/", async (req, res) => {
 });
 
 patientRouter.get("/", async (req, res) => {
-  const patientRepo = getRepository(Patient);
+  const patientRepo = getRepository("Patient");
   const patient = await patientRepo.find();
 
   return res.status(200).json(patient);
 });
 
 patientRouter.get("/:id", async (req, res) => {
-  const patientRepo = getRepository(Patient);
+  const patientRepo = getRepository("Patient");
   const { id } = req.params;
   const patient = await patientRepo.findOne(id);
   return res.status(200).json(patient);
@@ -36,7 +36,7 @@ patientRouter.get("/:id", async (req, res) => {
 
 patientRouter.put("/:id", async (req, res) => {
   const { name } = req.body;
-  const employeeRepo = getRepository(Patient);
+  const employeeRepo = getRepository("Patient");
   const { id } = req.params;
   const patientFind = await employeeRepo.findOne(id);
 
@@ -49,7 +49,7 @@ patientRouter.put("/:id", async (req, res) => {
 });
 
 patientRouter.delete("/:id", async (req, res) => {
-  const patientRepo = getRepository(Patient);
+  const patientRepo = getRepository("Patient");
   const { id } = req.params;
   await patientRepo.delete(id);
   return res.status(200).send();

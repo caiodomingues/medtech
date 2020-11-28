@@ -21,7 +21,7 @@ export class createAppointmentsTable1606576206703
           },
           {
             name: "dateHour",
-            type: "date",
+            type: "varchar",
           },
           {
             name: "patientId",

@@ -6,6 +6,7 @@ import {
   UpdateDateColumn,
   ManyToOne,
   JoinColumn,
+  Timestamp,
 } from "typeorm";
 import { Patient } from "./Patient";
 import { Doctor } from "./Doctor";
@@ -16,7 +17,7 @@ export class Appointment {
   id: string;
 
   @Column()
-  dateHour: Date;
+  dateHour: string;
 
   @ManyToOne(() => Patient)
   @JoinColumn({ name: "patientId" })

@@ -46,7 +46,7 @@ appointmentRouter.get("/:id", async (req, res) => {
 
 appointmentRouter.put("/:id", async (req, res) => {
   const { dateHour, patientId, doctorId } = req.body;
-  const appointmentRepo = getRepository(Appointment);
+  const appointmentRepo = getRepository("Appointment");
   const { id } = req.params;
   const patientFind = await appointmentRepo.findOne(id);
 
@@ -61,7 +61,7 @@ appointmentRouter.put("/:id", async (req, res) => {
 });
 
 appointmentRouter.delete("/:id", async (req, res) => {
-  const patientRepo = getRepository(Appointment);
+  const patientRepo = getRepository("Appointment");
   const { id } = req.params;
   await patientRepo.delete(id);
   return res.status(200).send();
