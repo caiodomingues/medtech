@@ -6,15 +6,20 @@ import {
   UpdateDateColumn,
   ManyToOne,
   JoinColumn,
+  OneToMany,
 } from "typeorm";
+import { Appointment } from "./Appointment";
 
-@Entity("ExamType")
-class ExamType {
+@Entity("Patient")
+export class Patient {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
   @Column()
   name: string;
+
+  // @OneToMany(() => Appointment, (appointment) => appointment.patient)
+  // appointments: Appointment[];
 
   @CreateDateColumn()
   created_at: Date;
@@ -22,5 +27,3 @@ class ExamType {
   @UpdateDateColumn()
   updated_at: Date;
 }
-
-export default ExamType;

@@ -1,17 +1,13 @@
 import { Router } from "express";
 
-import usersRouter from "./users.routes";
-import sessionsRouter from "./sessions.routes";
-import employeesRouter from "./employees.routes";
-import examTypesRouter from "./examtypes.routes";
-import examRouter from "./exams.routes";
+import patientRouter from "./patient.routes";
+import doctorRouter from "./doctor.routes";
+import appointmentsRouter from "./appointment.routes";
 
 const routes = Router();
 
-routes.use("/users", usersRouter);
-routes.use("/sessions", sessionsRouter);
-routes.use("/employees", employeesRouter);
-routes.use("/exams-types", examTypesRouter);
-routes.use("/exams", examRouter);
+routes.use("/patients", patientRouter);
+routes.use("/doctors", doctorRouter);
+routes.use("/appointments", appointmentsRouter);
 
 export default routes;

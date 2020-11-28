@@ -5,7 +5,7 @@
   "username": "postgres",
   "password": "123456",
   "database": "medtech",
-  "entities": ["./dist/app/models/*.js"],
+  "entities": ["./dist/app/models/*.js", "./dist/app/models/*.ts"],
   "migrations": ["./dist/database/migrations/*.js"],
   "cli": {
     "migrationsDir": "./src/database/migrations"

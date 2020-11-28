@@ -4,12 +4,12 @@ import {
   Column,
   CreateDateColumn,
   UpdateDateColumn,
-  ManyToOne,
-  JoinColumn,
+  ManyToMany,
+  JoinTable,
 } from "typeorm";
 
-@Entity("Employees")
-class Employees {
+@Entity("Doctor")
+export class Doctor {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
@@ -17,19 +17,13 @@ class Employees {
   name: string;
 
   @Column()
-  cpf: string;
+  specialty: string;
 
-  @Column()
-  efunction: string;
-
-  @Column()
-  cellphone: string;
-
-  @Column()
-  email: string;
-
-  @Column()
-  photo: string;
+  // @ManyToMany((type) => Specialty, (specialty) => specialty.doctors, {
+  //   cascade: true,
+  // })
+  // @JoinTable()
+  // specialties: Specialty[];
 
   @CreateDateColumn()
   created_at: Date;
@@ -37,5 +31,3 @@ class Employees {
   @UpdateDateColumn()
   updated_at: Date;
 }
-
-export default Employees;
