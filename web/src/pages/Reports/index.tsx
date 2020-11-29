@@ -21,37 +21,28 @@ const Reports: React.FC = () => {
 
   useEffect(() => {
     const data = async () => {
-      // await api
-      //   .get("?")
-      //   .then((res) => {
-      //     setReports(res.data);
-      //   })
-      //   .catch((err) => {
-      //     console.log(err);
-      //   });
-
-      setReports([
-        {
-          id: "1",
-          name: "Salve chat",
-        },
-      ]);
+      await api
+        .get("appointments")
+        .then((res) => {
+          setReports(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     };
 
     data();
   }, []);
 
   const handleDelete = async (id: string) => {
-    // await api
-    //   .delete(`?/${id}`)
-    //   .then((res) => {
-    //     history.push("/reports");
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
-
-    setReports(reports.filter((r: ReportType) => r.id !== id));
+    await api
+      .delete(`appointments/${id}`)
+      .then((res) => {
+        setReports(reports.filter((r: ReportType) => r.id !== id));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (
@@ -60,7 +51,7 @@ const Reports: React.FC = () => {
       <Content>
         <CardContainer>
           <h1>Agendamentos</h1>
-          {reports &&
+          {reports.length > 0 ? (
             reports.map((r: ReportType) => (
               <Card>
                 <h1>{r.name}</h1>
@@ -78,7 +69,12 @@ const Reports: React.FC = () => {
                   />
                 </span>
               </Card>
-            ))}
+            ))
+          ) : (
+            <Card>
+              <p>Não há agendamentos</p>
+            </Card>
+          )}
         </CardContainer>
       </Content>
     </Container>

@@ -12,6 +12,7 @@ export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {}
 
 export interface UserProps {
+  id: string;
   name: string;
   email?: string;
   speciality?: string;

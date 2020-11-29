@@ -10,7 +10,7 @@ export const Container = styled.div`
     font-size: 16px;
     min-width: 340px;
     width: 100%;
-    max-width: 720px;
+    max-width: 716px;
 
     &::placeholder {
       opacity: 0.5;
