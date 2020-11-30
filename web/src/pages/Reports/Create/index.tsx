@@ -21,7 +21,7 @@ const Create: React.FC = () => {
   const [scheduleHour, setScheduleHour] = useState<string>("");
   const [patient, setPatient] = useState<string>("");
   const [medic, setMedic] = useState<string>("");
-  const [speciality, setSpeciality] = useState<string>("");
+  const [speciality, setSpeciality] = useState<string | undefined>("");
 
   const [patientOptions, setPatientOptions] = useState<any[]>([]);
   const [medicOptions, setMedicOptions] = useState<any[]>([]);
@@ -38,7 +38,9 @@ const Create: React.FC = () => {
       await api
         .get("doctors")
         .then((res) => {
+          console.log("docstor", res.data);
           setMedicOptions(res.data);
+          setSpeciality(res.data.specialty);
         })
         .catch((err) => console.log(err));
 
@@ -46,7 +48,15 @@ const Create: React.FC = () => {
         await api
           .get(`appointments/${id}`)
           .then((res) => {
-            console.log(res.data);
+            console.log(res.data[0])
+            const data = res.data[0];
+            const time = data.dateHour.split(" ");
+            
+            setMedic(data.doctorId);
+            setPatient(data.patientId);
+            setScheduleDate(time[0]);
+            setScheduleHour(time[1]);
+            setSpeciality(data.doctor.specialty)
           })
           .catch((err) => console.log(err));
       }
@@ -54,6 +64,12 @@ const Create: React.FC = () => {
 
     data();
   }, [id]);
+
+  const handleChange = (e: any) => {
+    setMedic(e.target.value);
+    const speciality = document.getElementById(e.target.value);
+    setSpeciality(speciality?.dataset.speciality);
+  };
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -63,12 +79,21 @@ const Create: React.FC = () => {
     const dateHour = `${scheduleDate} ${scheduleHour}`;
     const data = { dateHour, patientId: patient, doctorId: medic };
 
-    await api
+    if(id) {
+      await api
+      .put(`appointments/${id}`, data)
+      .then((res) => {
+        history.goBack();
+      })
+      .catch((err) => console.log(err));
+    } else {
+      await api
       .post("appointments", data)
       .then((res) => {
         history.goBack();
       })
       .catch((err) => console.log(err));
+    }
   };
 
   return (
@@ -112,7 +137,7 @@ const Create: React.FC = () => {
                 </option>
                 {patientOptions &&
                   patientOptions.map((m: UserProps) => (
-                    <option value={m.id} selected={patient === m.id}>
+                    <option value={m.id} key={m.id} selected={patient === m.id}>
                       {m.name}
                     </option>
                   ))}
@@ -120,17 +145,19 @@ const Create: React.FC = () => {
               <br />
               <br />
               <label htmlFor="medic">Médico</label>
-              <Select
-                name="medic"
-                id="medic"
-                onChange={(e) => setMedic(e.target.value)}
-              >
+              <Select name="medic" id="medic" onChange={(e) => handleChange(e)}>
                 <option value="-1" disabled selected>
-                  Selecione um paciente
+                  Selecione um médico
                 </option>
                 {medicOptions &&
                   medicOptions.map((m: UserProps) => (
-                    <option value={m.id} selected={medic === m.id}>
+                    <option
+                      data-speciality={m.specialty}
+                      id={m.id}
+                      value={m.id}
+                      key={m.id}
+                      selected={medic === m.id}
+                    >
                       {m.name}
                     </option>
                   ))}
@@ -144,7 +171,7 @@ const Create: React.FC = () => {
                 name="speciality"
                 placeholder="Especialidade"
                 value={speciality}
-                onChange={(e) => setSpeciality(e.target.value)}
+                disabled
               />
               <CardBottom>
                 <Button type="submit">

@@ -12,7 +12,11 @@ import Card from "../../components/Card";
 
 interface ReportType {
   id: string;
-  name: string;
+  dateHour: string;
+  patient: {
+    id: string;
+    name: string;
+  };
 }
 
 const Reports: React.FC = () => {
@@ -24,6 +28,7 @@ const Reports: React.FC = () => {
       await api
         .get("appointments")
         .then((res) => {
+          console.log(res.data);
           setReports(res.data);
         })
         .catch((err) => {
@@ -54,9 +59,12 @@ const Reports: React.FC = () => {
           {reports.length > 0 ? (
             reports.map((r: ReportType) => (
               <Card>
-                <h1>{r.name}</h1>
+                <h1>{r.patient.name}</h1>
+                <p>{r.dateHour}</p>
                 <br />
                 <span>
+                  <br />
+
                   <HiOutlinePencil
                     onClick={() => history.push(`/edit-report/${r.id}`)}
                     size={24}
