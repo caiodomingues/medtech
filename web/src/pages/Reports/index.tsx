@@ -17,6 +17,11 @@ interface ReportType {
     id: string;
     name: string;
   };
+  doctor: {
+    id: string;
+    name: string;
+    specialty: string;
+  };
 }
 
 const Reports: React.FC = () => {
@@ -65,7 +70,8 @@ const Reports: React.FC = () => {
                     " " +
                     r.dateHour.split(" ")[1]}
                 </p>
-                <br />
+                <h2 style={{marginTop: 16}}>Médico: {r.doctor.name}</h2>
+                <p>{r.doctor.specialty}</p>
                 <span>
                   <br />
 
