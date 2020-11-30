@@ -60,7 +60,11 @@ const Reports: React.FC = () => {
             reports.map((r: ReportType) => (
               <Card>
                 <h1>{r.patient.name}</h1>
-                <p>{r.dateHour}</p>
+                <p>
+                  {r.dateHour.split(" ")[0].split("-").reverse().join("/") +
+                    " " +
+                    r.dateHour.split(" ")[1]}
+                </p>
                 <br />
                 <span>
                   <br />
